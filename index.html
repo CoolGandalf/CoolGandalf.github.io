@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <title>Swipe + Rank</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <h1>Swipe + Force Rank</h1>
+        <p class="subtitle">Round 1: swipe left/right. Round 2: force-rank your right swipes.</p>
+        <div class="header-actions">
+          <button id="restart-btn" class="secondary" type="button">Reset</button>
+        </div>
+      </header>
+
+      <section id="swipe-round" class="panel">
+        <h2>Round 1: Swipe</h2>
+        <p id="swipe-progress" class="progress"></p>
+        <div id="card-stack" class="card-stack" aria-live="polite"></div>
+        <div class="controls">
+          <button id="left-btn" class="left" type="button">⬅ Pass</button>
+          <button id="right-btn" class="right" type="button">Keep ➡</button>
+        </div>
+      </section>
+
+      <section id="rank-round" class="panel hidden">
+        <h2>Round 2: Rank Your Keeps</h2>
+        <p class="hint">On phone: use ↑ / ↓ to reorder. On desktop: drag and drop also works.</p>
+        <ol id="rank-list" class="rank-list"></ol>
+        <button id="finish-btn" type="button" class="finish">Finalize Ranking</button>
+      </section>
+
+      <section id="results" class="panel hidden">
+        <h2>Final Ranking</h2>
+        <ol id="final-ranking" class="rank-list"></ol>
+        <button id="copy-btn" type="button" class="secondary">Copy Ranking</button>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

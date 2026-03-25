@@ -1,46 +1,156 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0f172a" />
-    <title>Swipe + Rank</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Leigh Llewelyn" />
+    <meta property="og:title" content="Leigh Llewelyn" />
+    <meta property="og:description" content="Leigh Llewelyn" />
+    <meta name="theme-color" content="#383838" />
+    <title>Leigh Llewelyn</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              outfit: ['Outfit', 'sans-serif'],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: 'Outfit', sans-serif;
+        background-color: #383838;
+        color: #e8e4df;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes appear {
+        from {
+          opacity: 0;
+          transform: scale(0.8) rotate(-10deg);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
+        }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+      }
+
+      .animate-appear {
+        animation: appear 0.8s ease-out forwards;
+      }
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        padding: 0.5rem;
+        color: #e8e4df;
+        transition: color 0.3s, background-color 0.3s;
+      }
+
+      .social-link:hover {
+        background-color: #e8e4df;
+        color: #383838;
+      }
+
+      .social-link:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #383838, 0 0 0 4px #e8e4df;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .animate-fade-in,
+        .animate-appear {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
   </head>
   <body>
-    <main class="app">
-      <header class="header">
-        <h1>Swipe + Force Rank</h1>
-        <p class="subtitle">Round 1: swipe left/right. Round 2: force-rank your right swipes.</p>
-        <div class="header-actions">
-          <button id="restart-btn" class="secondary" type="button">Reset</button>
+    <main class="min-h-screen flex items-center justify-center">
+      <div class="flex flex-col items-center">
+
+        <div class="animate-appear" style="opacity: 0;">
+          <img
+            src="/images/logo.png"
+            alt="LL logo"
+            width="200"
+            height="200"
+            class="w-[140px] h-[140px] sm:w-[200px] sm:h-[200px]"
+          />
         </div>
-      </header>
 
-      <section id="swipe-round" class="panel">
-        <h2>Round 1: Swipe</h2>
-        <p id="swipe-progress" class="progress"></p>
-        <div id="card-stack" class="card-stack" aria-live="polite"></div>
-        <div class="controls">
-          <button id="left-btn" class="left" type="button">⬅ Pass</button>
-          <button id="right-btn" class="right" type="button">Keep ➡</button>
+        <h1
+          class="mt-6 text-5xl sm:text-6xl font-light animate-fade-in"
+          style="opacity: 0; animation-delay: 0.2s;"
+        >
+          Leigh Llewelyn
+        </h1>
+
+        <div
+          class="flex gap-5 mt-6 animate-fade-in"
+          style="opacity: 0; animation-delay: 0.4s;"
+        >
+          <!-- Email -->
+          <a href="mailto:Leigh.Llewelyn@Gmail.com" class="social-link" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/leigh-llewelyn-83269769/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect width="4" height="12" x="2" y="9"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+
+          <!-- Instagram -->
+          <a href="https://instagram.com/Llewely" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/CoolGandalf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
         </div>
-      </section>
 
-      <section id="rank-round" class="panel hidden">
-        <h2>Round 2: Rank Your Keeps</h2>
-        <p class="hint">On phone: use ↑ / ↓ to reorder. On desktop: drag and drop also works.</p>
-        <ol id="rank-list" class="rank-list"></ol>
-        <button id="finish-btn" type="button" class="finish">Finalize Ranking</button>
-      </section>
-
-      <section id="results" class="panel hidden">
-        <h2>Final Ranking</h2>
-        <ol id="final-ranking" class="rank-list"></ol>
-        <button id="copy-btn" type="button" class="secondary">Copy Ranking</button>
-      </section>
+      </div>
     </main>
-
-    <script src="app.js"></script>
   </body>
 </html>

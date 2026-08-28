@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17142d">
+  <meta name="description" content="One spin. One official weirdness level. No appeals.">
+  <meta property="og:title" content="How Weird Are We Getting?">
+  <meta property="og:description" content="A highly scientific wheel for settling the matter.">
+  <title>How Weird Are We Getting?</title>
+  <style>
+    :root {
+      --night: #17142d;
+      --night-2: #241b42;
+      --cream: #fff6df;
+      --gold: #ffd45c;
+      --gold-dark: #c98719;
+      --pink: #ff5f87;
+      --blue: #4cc9f0;
+      --purple: #9966ff;
+      --coral: #ff8a5b;
+      --mint: #49d6a7;
+      --ink: #201a35;
+      --sans: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      --display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      color: var(--cream);
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(153, 102, 255, .32), transparent 27rem),
+        radial-gradient(circle at 88% 78%, rgba(255, 95, 135, .20), transparent 24rem),
+        linear-gradient(145deg, var(--night-2), var(--night));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image:
+        radial-gradient(circle, #fff 0 1px, transparent 1.5px),
+        radial-gradient(circle, #fff 0 1px, transparent 1.5px);
+      background-position: 0 0, 32px 26px;
+      background-size: 64px 64px;
+      mask-image: linear-gradient(to bottom, #000, transparent 80%);
+    }
+
+    .page {
+      width: min(100%, 920px);
+      margin: 0 auto;
+      padding: max(24px, env(safe-area-inset-top)) 18px max(44px, env(safe-area-inset-bottom));
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 7px;
+      color: var(--gold);
+      font-size: clamp(.68rem, 2vw, .8rem);
+      font-weight: 900;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(2.45rem, 9vw, 5.3rem);
+      font-weight: 900;
+      line-height: .9;
+      letter-spacing: .015em;
+      text-transform: uppercase;
+      text-wrap: balance;
+      text-shadow: 0 4px 0 rgba(0, 0, 0, .28);
+    }
+
+    .intro {
+      max-width: 610px;
+      margin: 12px auto 10px;
+      color: rgba(255, 246, 223, .75);
+      font-size: clamp(.94rem, 2.3vw, 1.08rem);
+    }
+
+    .wheel-wrap {
+      position: relative;
+      width: min(92vw, 610px);
+      margin: 2px auto 0;
+      padding-top: 30px;
+      filter: drop-shadow(0 24px 40px rgba(0, 0, 0, .38));
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .wheel-shell {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      border: clamp(7px, 1.4vw, 13px) solid var(--gold);
+      border-radius: 50%;
+      background: #15112a;
+      box-shadow:
+        0 0 0 4px var(--gold-dark),
+        0 0 0 10px #4f2f70,
+        inset 0 0 25px rgba(0, 0, 0, .55);
+      overflow: hidden;
+    }
+
+    canvas#wheel {
+      display: block;
+      width: 100%;
+      height: 100%;
+      transform: rotate(0deg);
+      will-change: transform;
+    }
+
+    .pointer {
+      position: absolute;
+      z-index: 5;
+      top: 3px;
+      left: 50%;
+      width: clamp(42px, 10vw, 66px);
+      height: clamp(66px, 15vw, 94px);
+      transform: translateX(-50%);
+      filter: drop-shadow(0 6px 2px rgba(0, 0, 0, .28));
+      transform-origin: 50% 15%;
+    }
+
+    .pointer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #ffe891, var(--gold) 55%, #f4a927);
+      clip-path: polygon(50% 100%, 0 20%, 24% 0, 76% 0, 100% 20%);
+      border-radius: 8px;
+    }
+
+    .pointer.tick { animation: pointerTick 82ms ease-out; }
+
+    @keyframes pointerTick {
+      0% { transform: translateX(-50%) rotate(0); }
+      45% { transform: translateX(-50%) rotate(-8deg); }
+      100% { transform: translateX(-50%) rotate(0); }
+    }
+
+    .hub {
+      position: absolute;
+      z-index: 4;
+      top: calc(50% + 15px);
+      left: 50%;
+      width: clamp(74px, 17vw, 116px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      transform: translate(-50%, -50%);
+      border: clamp(5px, 1vw, 9px) solid #ffe998;
+      border-radius: 50%;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(1rem, 4vw, 1.65rem);
+      letter-spacing: .06em;
+      background: radial-gradient(circle at 38% 30%, #fff9bd, var(--gold) 50%, #e8a62f 72%);
+      box-shadow: 0 8px 0 #a86417, 0 10px 22px rgba(0, 0, 0, .35);
+      pointer-events: none;
+    }
+
+    .result-card {
+      position: relative;
+      width: min(100%, 650px);
+      min-height: 126px;
+      margin: 24px auto 0;
+      padding: 17px 18px 16px;
+      border: 2px solid rgba(255, 212, 92, .68);
+      border-radius: 18px;
+      background: rgba(20, 16, 43, .72);
+      box-shadow: inset 0 0 22px rgba(153, 102, 255, .14);
+      backdrop-filter: blur(10px);
+    }
+
+    .result-kicker {
+      margin: 0;
+      color: var(--gold);
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .result {
+      margin: 4px 0 3px;
+      color: var(--cream);
+      font-family: var(--display);
+      font-size: clamp(1.65rem, 6vw, 2.8rem);
+      line-height: 1;
+      letter-spacing: .025em;
+      text-transform: uppercase;
+    }
+
+    .verdict {
+      margin: 0;
+      color: rgba(255, 246, 223, .72);
+      font-size: clamp(.82rem, 2.5vw, .98rem);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    button {
+      min-height: 52px;
+      border: 0;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 950;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    #spin {
+      min-width: min(78vw, 340px);
+      padding: 14px 28px;
+      color: var(--ink);
+      background: linear-gradient(180deg, #fff09d, var(--gold));
+      box-shadow: 0 7px 0 #ae6a16, 0 13px 24px rgba(0, 0, 0, .28);
+      transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+    }
+
+    #spin:hover { filter: brightness(1.07); transform: translateY(-1px); }
+    #spin:active { transform: translateY(5px); box-shadow: 0 2px 0 #ae6a16; }
+    #spin:disabled { cursor: wait; filter: saturate(.45); transform: none; }
+
+    #sound {
+      width: 52px;
+      min-width: 52px;
+      padding: 0;
+      color: var(--cream);
+      background: rgba(255, 255, 255, .09);
+      border: 1px solid rgba(255, 255, 255, .18);
+    }
+
+    button:focus-visible {
+      outline: 4px solid var(--blue);
+      outline-offset: 4px;
+    }
+
+    .fine-print {
+      margin: 16px auto 0;
+      color: rgba(255, 246, 223, .46);
+      font-size: .72rem;
+    }
+
+    .confetti {
+      position: fixed;
+      z-index: 20;
+      top: -20px;
+      left: 0;
+      width: 9px;
+      height: 15px;
+      border-radius: 2px;
+      pointer-events: none;
+      animation: fall var(--fall-time) cubic-bezier(.15, .75, .45, 1) forwards;
+    }
+
+    @keyframes fall {
+      0% { opacity: 1; transform: translate3d(var(--start-x), -20px, 0) rotate(0); }
+      100% { opacity: 0; transform: translate3d(var(--end-x), 105vh, 0) rotate(var(--spin)); }
+    }
+
+    @media (max-width: 560px) {
+      .page { padding-left: 12px; padding-right: 12px; }
+      .wheel-wrap { width: min(94vw, 470px); }
+      .result-card { width: calc(100% - 8px); min-height: 118px; }
+      .controls { gap: 8px; }
+      #spin { min-width: 0; flex: 1; max-width: 330px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pointer.tick { animation: none; }
+      .confetti { display: none; }
+      #spin { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <p class="eyebrow">A highly scientific group decision</p>
+    <h1>How weird are we getting?</h1>
+    <p class="intro">One spin settles the matter. The wheel accepts no appeals and remembers nothing.</p>
+
+    <section class="wheel-wrap" aria-label="Weirdness wheel">
+      <div class="pointer" id="pointer" aria-hidden="true"></div>
+      <div class="wheel-shell">
+        <canvas id="wheel" width="900" height="900" aria-hidden="true"></canvas>
+      </div>
+      <div class="hub" aria-hidden="true">SPIN</div>
+    </section>
+
+    <section class="result-card" aria-live="polite" aria-atomic="true">
+      <p class="result-kicker" id="result-kicker">Official ruling pending</p>
+      <p class="result" id="result">The wheel is ready</p>
+      <p class="verdict" id="verdict">Gather the group. Assume nothing.</p>
+    </section>
+
+    <div class="controls">
+      <button id="spin" type="button">Spin for weirdness</button>
+      <button id="sound" type="button" aria-label="Mute wheel sounds" aria-pressed="false">🔊</button>
+    </div>
+
+    <p class="fine-print">For entertainment purposes. Regrettably binding.</p>
+  </main>
+
+  <script>
+    (() => {
+      const levels = [
+        { label: 'TAME', quip: 'Everyone can make eye contact tomorrow.' },
+        { label: 'LIGHTLY ODD', quip: 'A respectable amount of nonsense.' },
+        { label: 'MILD NONSENSE', quip: 'Plausible deniability remains intact.' },
+        { label: 'QUESTIONABLE VIBES', quip: 'The group chat is warming up.' },
+        { label: 'SUSPICIOUSLY SILLY', quip: 'Standards are becoming interpretive.' },
+        { label: 'CHAOTIC GOOD', quip: 'The committee has lost control.' },
+        { label: 'NOTICEABLY WEIRD', quip: 'Context will not help.' },
+        { label: 'GENTLY UNHINGED', quip: 'A debrief is now likely.' },
+        { label: 'HARD TO EXPLAIN', quip: 'Future historians will disagree.' },
+        { label: 'DEEPLY PECULIAR', quip: 'Explanations are no longer recommended.' },
+        { label: 'ALARMINGLY FESTIVE', quip: 'The night has become self-governing.' },
+        { label: 'VERY WEIRD', quip: 'Very weird. The wheel has spoken.' }
+      ];
+
+      const colors = ['#ff5f87', '#ff8a5b', '#ffd45c', '#49d6a7', '#4cc9f0', '#9966ff'];
+      const canvas = document.querySelector('#wheel');
+      const ctx = canvas.getContext('2d');
+      const spinButton = document.querySelector('#spin');
+      const soundButton = document.querySelector('#sound');
+      const pointer = document.querySelector('#pointer');
+      const result = document.querySelector('#result');
+      const kicker = document.querySelector('#result-kicker');
+      const verdict = document.querySelector('#verdict');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const arc = (Math.PI * 2) / levels.length;
+      let rotation = 0;
+      let spinning = false;
+      let muted = false;
+      let audioContext = null;
+      let lastTick = -1;
+
+      function splitLabel(label) {
+        const words = label.split(' ');
+        if (words.length === 1) return [label];
+        if (words.length === 2) return words;
+        const pivot = Math.ceil(words.length / 2);
+        return [words.slice(0, pivot).join(' '), words.slice(pivot).join(' ')];
+      }
+
+      function drawWheel() {
+        const size = canvas.width;
+        const center = size / 2;
+        const radius = center - 20;
+        ctx.clearRect(0, 0, size, size);
+
+        levels.forEach((level, index) => {
+          const start = -Math.PI / 2 + index * arc;
+          const end = start + arc;
+          ctx.beginPath();
+          ctx.moveTo(center, center);
+          ctx.arc(center, center, radius, start, end);
+          ctx.closePath();
+          ctx.fillStyle = colors[index % colors.length];
+          ctx.fill();
+          ctx.lineWidth = 7;
+          ctx.strokeStyle = '#fff6df';
+          ctx.stroke();
+
+          const angle = start + arc / 2;
+          ctx.save();
+          ctx.translate(center, center);
+          ctx.rotate(angle);
+          ctx.textAlign = 'right';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#201a35';
+          ctx.shadowColor = 'rgba(255,255,255,.34)';
+          ctx.shadowBlur = 1;
+          const lines = splitLabel(level.label);
+          const fontSize = level.label.length > 17 ? 24 : level.label.length > 13 ? 28 : 33;
+          ctx.font = `900 ${fontSize}px ${getComputedStyle(document.documentElement).getPropertyValue('--sans')}`;
+          const lineHeight = fontSize * 1.03;
+          lines.forEach((line, lineIndex) => {
+            const y = (lineIndex - (lines.length - 1) / 2) * lineHeight;
+            ctx.fillText(line, radius - 54, y, 240);
+          });
+          ctx.restore();
+        });
+
+        ctx.beginPath();
+        ctx.arc(center, center, radius, 0, Math.PI * 2);
+        ctx.lineWidth = 15;
+        ctx.strokeStyle = '#ffd45c';
+        ctx.stroke();
+
+        for (let i = 0; i < 36; i += 1) {
+          const angle = (i / 36) * Math.PI * 2;
+          const x = center + Math.cos(angle) * (radius - 3);
+          const y = center + Math.sin(angle) * (radius - 3);
+          ctx.beginPath();
+          ctx.arc(x, y, 6.5, 0, Math.PI * 2);
+          ctx.fillStyle = i % 2 ? '#fff6df' : '#ffe47f';
+          ctx.shadowColor = '#fff1a8';
+          ctx.shadowBlur = 9;
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+      }
+
+      function randomIndex() {
+        const values = new Uint32Array(1);
+        crypto.getRandomValues(values);
+        return values[0] % levels.length;
+      }
+
+      function easeOutQuint(t) {
+        return 1 - Math.pow(1 - t, 5);
+      }
+
+      function normalizeAngle(value) {
+        const full = Math.PI * 2;
+        return ((value % full) + full) % full;
+      }
+
+      function playTick() {
+        if (muted) return;
+        audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        oscillator.type = 'triangle';
+        oscillator.frequency.setValueAtTime(620, audioContext.currentTime);
+        gain.gain.setValueAtTime(.035, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(.001, audioContext.currentTime + .045);
+        oscillator.connect(gain).connect(audioContext.destination);
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + .05);
+      }
+
+      function playFanfare() {
+        if (muted) return;
+        audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+        [392, 523, 659].forEach((frequency, index) => {
+          const oscillator = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          const start = audioContext.currentTime + index * .08;
+          oscillator.type = 'sine';
+          oscillator.frequency.setValueAtTime(frequency, start);
+          gain.gain.setValueAtTime(.001, start);
+          gain.gain.linearRampToValueAtTime(.08, start + .025);
+          gain.gain.exponentialRampToValueAtTime(.001, start + .25);
+          oscillator.connect(gain).connect(audioContext.destination);
+          oscillator.start(start);
+          oscillator.stop(start + .28);
+        });
+      }
+
+      function dropConfetti() {
+        const palette = ['#ff5f87', '#ff8a5b', '#ffd45c', '#49d6a7', '#4cc9f0', '#9966ff'];
+        for (let i = 0; i < 54; i += 1) {
+          const piece = document.createElement('i');
+          piece.className = 'confetti';
+          piece.style.background = palette[i % palette.length];
+          piece.style.setProperty('--start-x', `${Math.random() * 100}vw`);
+          piece.style.setProperty('--end-x', `${(Math.random() - .5) * 34}vw`);
+          piece.style.setProperty('--spin', `${Math.random() * 1080 - 540}deg`);
+          piece.style.setProperty('--fall-time', `${1.8 + Math.random() * 1.7}s`);
+          piece.style.animationDelay = `${Math.random() * .18}s`;
+          document.body.appendChild(piece);
+          piece.addEventListener('animationend', () => piece.remove(), { once: true });
+        }
+      }
+
+      function announce(index) {
+        const level = levels[index];
+        kicker.textContent = `Weirdness level ${index + 1} of ${levels.length}`;
+        result.textContent = level.label;
+        verdict.textContent = level.quip;
+        playFanfare();
+        if (!prefersReducedMotion.matches) dropConfetti();
+      }
+
+      function spin() {
+        if (spinning) return;
+        spinning = true;
+        spinButton.disabled = true;
+        spinButton.textContent = 'Consulting the wheel…';
+        kicker.textContent = 'Official ruling in progress';
+        result.textContent = 'No appeals';
+        verdict.textContent = 'The wheel is considering the evidence.';
+
+        const target = randomIndex();
+        const current = normalizeAngle(rotation);
+        const desired = normalizeAngle(-(target + .5) * arc);
+        const deltaToTarget = normalizeAngle(desired - current);
+        const extraTurns = 6 + (target % 3);
+        const distance = extraTurns * Math.PI * 2 + deltaToTarget;
+        const startRotation = rotation;
+        const duration = prefersReducedMotion.matches ? 650 : 5000;
+        const startTime = performance.now();
+        lastTick = Math.floor(current / arc);
+
+        function frame(now) {
+          const progress = Math.min(1, (now - startTime) / duration);
+          rotation = startRotation + distance * easeOutQuint(progress);
+          canvas.style.transform = `rotate(${rotation}rad)`;
+
+          const tickIndex = Math.floor(normalizeAngle(rotation) / arc);
+          if (tickIndex !== lastTick) {
+            lastTick = tickIndex;
+            pointer.classList.remove('tick');
+            void pointer.offsetWidth;
+            pointer.classList.add('tick');
+            playTick();
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(frame);
+            return;
+          }
+
+          rotation = startRotation + distance;
+          canvas.style.transform = `rotate(${rotation}rad)`;
+          spinning = false;
+          spinButton.disabled = false;
+          spinButton.textContent = 'Spin again';
+          announce(target);
+        }
+
+        requestAnimationFrame(frame);
+      }
+
+      spinButton.addEventListener('click', spin);
+      soundButton.addEventListener('click', () => {
+        muted = !muted;
+        soundButton.textContent = muted ? '🔇' : '🔊';
+        soundButton.setAttribute('aria-pressed', String(muted));
+        soundButton.setAttribute('aria-label', muted ? 'Enable wheel sounds' : 'Mute wheel sounds');
+      });
+
+      drawWheel();
+    })();
+  </script>
+</body>
+</html>

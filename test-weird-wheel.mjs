@@ -10,16 +10,17 @@ function levelLabels() {
   return [...block[1].matchAll(/label: '([^']+)'/g)].map((match) => match[1]);
 }
 
-test('wheel provides a twelve-step tame-to-very-weird scale', () => {
+test('wheel provides twelve all-unhinged outcomes', () => {
   const labels = levelLabels();
   assert.equal(labels.length, 12);
-  assert.equal(labels[0], 'TAME');
-  assert.equal(labels.at(-1), 'VERY WEIRD');
+  assert.equal(labels[0], 'QUESTIONABLE ENERGY');
+  assert.equal(labels.at(-1), 'MAXIMUM WEIRD');
+  assert.equal(labels.some((label) => /tame|mild|lightly|normal|sensible|safe/i.test(label)), false);
 });
 
 test('wheel contains only abstract intensity labels, not dares', () => {
   const labels = levelLabels();
-  const prohibited = /drink|kiss|text|call|remove|take off|buy|eat|go to|steal/i;
+  const prohibited = /\b(?:drink|kiss|text|call|remove|take off|buy|eat|go to|steal)\b/i;
   assert.equal(labels.some((label) => prohibited.test(label)), false);
 });
 
@@ -28,6 +29,8 @@ test('interactive controls and accessible result region exist', () => {
   assert.match(html, /id="spin" type="button"/);
   assert.match(html, /aria-live="polite"/);
   assert.match(html, /prefers-reduced-motion/);
+  assert.match(html, /How unhinged are we getting\?/i);
+  assert.match(html, /Spin the chaos wheel/i);
 });
 
 test('page is self-contained', () => {

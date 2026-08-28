@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#17142d">
-  <meta name="description" content="One spin. One official weirdness level. No appeals.">
-  <meta property="og:title" content="How Weird Are We Getting?">
-  <meta property="og:description" content="A highly scientific wheel for settling the matter.">
-  <title>How Weird Are We Getting?</title>
+  <meta name="description" content="The tame settings have been removed. Spin responsibly, or do not.">
+  <meta property="og:title" content="How Unhinged Are We Getting?">
+  <meta property="og:description" content="A wheel with no responsible settings.">
+  <title>How Unhinged Are We Getting?</title>
   <style>
     :root {
       --night: #17142d;
@@ -80,6 +80,14 @@
       text-transform: uppercase;
       text-wrap: balance;
       text-shadow: 0 4px 0 rgba(0, 0, 0, .28);
+      animation: headlineTwitch 4.8s steps(1, end) infinite;
+    }
+
+    @keyframes headlineTwitch {
+      0%, 88%, 92%, 100% { transform: rotate(0) skewX(0); }
+      89% { transform: rotate(-1deg) skewX(-3deg); }
+      90% { transform: rotate(1deg) skewX(4deg); }
+      91% { transform: rotate(-.5deg) skewX(-2deg); }
     }
 
     .intro {
@@ -288,6 +296,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      h1 { animation: none; }
       .pointer.tick { animation: none; }
       .confetti { display: none; }
       #spin { transition: none; }
@@ -296,50 +305,50 @@
 </head>
 <body>
   <main class="page">
-    <p class="eyebrow">A highly scientific group decision</p>
-    <h1>How weird are we getting?</h1>
-    <p class="intro">One spin settles the matter. The wheel accepts no appeals and remembers nothing.</p>
+    <p class="eyebrow">No responsible settings available</p>
+    <h1>How unhinged are we getting?</h1>
+    <p class="intro">The tame settings were removed after an internal review. One spin settles what remains.</p>
 
     <section class="wheel-wrap" aria-label="Weirdness wheel">
       <div class="pointer" id="pointer" aria-hidden="true"></div>
       <div class="wheel-shell">
         <canvas id="wheel" width="900" height="900" aria-hidden="true"></canvas>
       </div>
-      <div class="hub" aria-hidden="true">SPIN</div>
+      <div class="hub" aria-hidden="true">CHAOS</div>
     </section>
 
     <section class="result-card" aria-live="polite" aria-atomic="true">
-      <p class="result-kicker" id="result-kicker">Official ruling pending</p>
-      <p class="result" id="result">The wheel is ready</p>
-      <p class="verdict" id="verdict">Gather the group. Assume nothing.</p>
+      <p class="result-kicker" id="result-kicker">Poor judgment pending</p>
+      <p class="result" id="result">Release the wheel</p>
+      <p class="verdict" id="verdict">It starts unhinged and gets worse.</p>
     </section>
 
     <div class="controls">
-      <button id="spin" type="button">Spin for weirdness</button>
+      <button id="spin" type="button">Spin the chaos wheel</button>
       <button id="sound" type="button" aria-label="Mute wheel sounds" aria-pressed="false">🔊</button>
     </div>
 
-    <p class="fine-print">For entertainment purposes. Regrettably binding.</p>
+    <p class="fine-print">The lowest setting has been removed by management. Regrettably binding.</p>
   </main>
 
   <script>
     (() => {
       const levels = [
-        { label: 'TAME', quip: 'Everyone can make eye contact tomorrow.' },
-        { label: 'LIGHTLY ODD', quip: 'A respectable amount of nonsense.' },
-        { label: 'MILD NONSENSE', quip: 'Plausible deniability remains intact.' },
-        { label: 'QUESTIONABLE VIBES', quip: 'The group chat is warming up.' },
-        { label: 'SUSPICIOUSLY SILLY', quip: 'Standards are becoming interpretive.' },
-        { label: 'CHAOTIC GOOD', quip: 'The committee has lost control.' },
-        { label: 'NOTICEABLY WEIRD', quip: 'Context will not help.' },
-        { label: 'GENTLY UNHINGED', quip: 'A debrief is now likely.' },
-        { label: 'HARD TO EXPLAIN', quip: 'Future historians will disagree.' },
-        { label: 'DEEPLY PECULIAR', quip: 'Explanations are no longer recommended.' },
-        { label: 'ALARMINGLY FESTIVE', quip: 'The night has become self-governing.' },
-        { label: 'VERY WEIRD', quip: 'Very weird. The wheel has spoken.' }
+        { label: 'QUESTIONABLE ENERGY', quip: 'We have skipped the responsible portion of the evening.' },
+        { label: 'GENTLY UNHINGED', quip: 'The wheel considers this the minimum.' },
+        { label: 'CHAOS WITH BENEFITS', quip: 'The paperwork has become decorative.' },
+        { label: 'SOCIALLY INEXPLICABLE', quip: 'Context will only make this worse.' },
+        { label: 'FERAL BUT POLITE', quip: 'Manners remain. Governance does not.' },
+        { label: 'THE BIT HAS ESCAPED', quip: 'It is no longer clear who started this.' },
+        { label: 'GROUP CHAT EVIDENCE', quip: 'A debrief has become mandatory.' },
+        { label: 'AGGRESSIVELY PECULIAR', quip: 'Future explanations will lack credibility.' },
+        { label: 'DEEPLY UNGOVERNABLE', quip: 'The night has rejected adult supervision.' },
+        { label: 'REALITY OPTIONAL', quip: 'Consensus is no longer connected to events.' },
+        { label: 'COSMICALLY UNSUPERVISED', quip: 'The universe has stopped taking notes.' },
+        { label: 'MAXIMUM WEIRD', quip: 'The wheel has voided the warranty.' }
       ];
 
-      const colors = ['#ff5f87', '#ff8a5b', '#ffd45c', '#49d6a7', '#4cc9f0', '#9966ff'];
+      const colors = ['#ff2f75', '#ff6b35', '#ffe14f', '#30e3a3', '#24c8ff', '#a64dff'];
       const canvas = document.querySelector('#wheel');
       const ctx = canvas.getContext('2d');
       const spinButton = document.querySelector('#spin');
@@ -499,10 +508,10 @@
         if (spinning) return;
         spinning = true;
         spinButton.disabled = true;
-        spinButton.textContent = 'Consulting the wheel…';
-        kicker.textContent = 'Official ruling in progress';
-        result.textContent = 'No appeals';
-        verdict.textContent = 'The wheel is considering the evidence.';
+        spinButton.textContent = 'Making it worse…';
+        kicker.textContent = 'Poor judgment in progress';
+        result.textContent = 'No safe outcome';
+        verdict.textContent = 'The wheel is removing the final guardrails.';
 
         const target = randomIndex();
         const current = normalizeAngle(rotation);

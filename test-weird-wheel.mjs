@@ -13,9 +13,10 @@ function levelLabels() {
 test('wheel provides twelve all-unhinged outcomes', () => {
   const labels = levelLabels();
   assert.equal(labels.length, 12);
-  assert.equal(labels[0], 'QUESTIONABLE ENERGY');
-  assert.equal(labels.at(-1), 'MAXIMUM WEIRD');
+  assert.equal(labels[0], 'SHADY AS HELL');
+  assert.equal(labels.at(-1), 'MAXIMUM FUCKING CHAOS');
   assert.equal(labels.some((label) => /tame|mild|lightly|normal|sensible|safe/i.test(label)), false);
+  assert.ok(labels.filter((label) => /fuck|shit|hell|damn/i.test(label)).length >= 7);
 });
 
 test('wheel contains only abstract intensity labels, not dares', () => {
@@ -29,8 +30,8 @@ test('interactive controls and accessible result region exist', () => {
   assert.match(html, /id="spin" type="button"/);
   assert.match(html, /aria-live="polite"/);
   assert.match(html, /prefers-reduced-motion/);
-  assert.match(html, /How unhinged are we getting\?/i);
-  assert.match(html, /Spin the chaos wheel/i);
+  assert.match(html, /How fucked are we getting\?/i);
+  assert.match(html, /Spin the fucking wheel/i);
 });
 
 test('page is self-contained', () => {
